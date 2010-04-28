@@ -7,7 +7,7 @@
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <link rel="stylesheet" href="http://yui.yahooapis.com/combo?3.0.0/build/cssreset/reset-min.css&3.0.0/build/cssfonts/fonts-min.css&3.0.0/build/cssbase/base-context-min.css" />
-    <link rel="stylesheet" href="../screen.css" />
+    <link rel="stylesheet" href="../resources/screen.css" />
   </head>
   <body>
     <div id="container">
@@ -15,8 +15,8 @@
         <h1><%= @title %></h1>
       </header>
       <section class="yui-cssbase">
-        <% if previous_image(i) %><a href="<%= i - 1 %>.html"><img src="../thumbs/<%= resize(previous_image(i), 75, true)%>" /></a><% end %>
         <img src="../thumbs/<%= resize(image, 800) %>" />
+        <% if previous_image(i) %><a href="<%= i - 1 %>.html"><img src="../thumbs/<%= resize(previous_image(i), 75, true)%>" /></a><% end %>
         <% if next_image(i) %><a href="<%= i + 1 %>.html"><img src="../thumbs/<%= resize(next_image(i), 75, true)%>" /></a><% end %>
       </section>
     </div>

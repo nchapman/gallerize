@@ -38,10 +38,10 @@ end
 @template_path = File.dirname(__FILE__)
 
 # Create necessary output paths
-mkdir_p([@output_path, File.join(@output_path, "thumbs"), File.join(@output_path, "show")])
+mkdir_p([@output_path, File.join(@output_path, "thumbs"), File.join(@output_path, "show"), File.join(@output_path, "resources")])
 
-# Copy support files
-cp(File.join(@template_path, "screen.css"), File.join(@output_path, "screen.css"))
+# Copy resource files
+cp_r(File.join(@template_path, "resources/."), File.join(@output_path, "resources"))
 
 # Gather images
 @images = Dir["*.jpg"].natural_sort
