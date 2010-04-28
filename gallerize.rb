@@ -34,15 +34,17 @@ def previous_image(i)
 end
 
 options = Trollop::options do
-  opt :title, "Title", :default => "gallerize"
-  opt :theme, "Theme name", :default => "default"
-  opt :output, "Output path"
+  opt :name, "Name", :default => "gallerize"
+  opt :theme, "Theme", :default => "default"
+  opt :output, "Output path", :type => :string
 end
 
+Trollop::die :output, "is required" if options[:output].nil?
+
 # Setup variables
-@title = options["title"]
-@output_path = options["output"]
-@theme_path = File.join(File.dirname(__FILE__), "themes", options["theme"])
+@name = options[:name]
+@output_path = options[:output]
+@theme_path = File.join(File.dirname(__FILE__), "themes", options[:theme])
 
 # Create necessary output paths
 mkdir_p([@output_path, File.join(@output_path, "thumbs"), File.join(@output_path, "show"), File.join(@output_path, "resources")])
