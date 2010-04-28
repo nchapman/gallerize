@@ -35,7 +35,7 @@ end
 # Setup variables
 @title = ARGV[0]
 @output_path = File.join(ARGV[1], @title.downcase.gsub(/[^a-z0-9]/, ""))
-@template_path = File.dirname(__FILE__)
+@template_path = File.join(File.dirname(__FILE__), "themes", "default")
 
 # Create necessary output paths
 mkdir_p([@output_path, File.join(@output_path, "thumbs"), File.join(@output_path, "show"), File.join(@output_path, "resources")])
