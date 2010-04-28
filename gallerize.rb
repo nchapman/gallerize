@@ -3,6 +3,7 @@ require 'fileutils'
 require 'rubygems'
 require 'rmagick'
 require 'natural_sort_kernel'
+require 'trollop'
 
 include FileUtils
 
@@ -32,23 +33,29 @@ def previous_image(i)
   i != 0 ? @images[i - 1] : nil
 end
 
+options = Trollop::options do
+  opt :title, "Title", :default => "gallerize"
+  opt :theme, "Theme name", :default => "default"
+  opt :output, "Output path"
+end
+
 # Setup variables
-@title = ARGV[0]
-@output_path = File.join(ARGV[1], @title.downcase.gsub(/[^a-z0-9]/, ""))
-@template_path = File.join(File.dirname(__FILE__), "themes", "default")
+@title = options["title"]
+@output_path = options["output"]
+@theme_path = File.join(File.dirname(__FILE__), "themes", options["theme"])
 
 # Create necessary output paths
 mkdir_p([@output_path, File.join(@output_path, "thumbs"), File.join(@output_path, "show"), File.join(@output_path, "resources")])
 
 # Copy resource files
-cp_r(File.join(@template_path, "resources/."), File.join(@output_path, "resources"))
+cp_r(File.join(@theme_path, "resources/."), File.join(@output_path, "resources"))
 
 # Gather images
 @images = Dir["*.jpg"].natural_sort
 
 # Load templates
-index_template = ERB.new(File.open(File.join(@template_path, "index.html.erb")) { |f| f.read })
-show_template = ERB.new(File.open(File.join(@template_path, "show.html.erb")) { |f| f.read })
+index_template = ERB.new(File.open(File.join(@theme_path, "index.html.erb")) { |f| f.read })
+show_template = ERB.new(File.open(File.join(@theme_path, "show.html.erb")) { |f| f.read })
 
 # Create Index page
 File.open(File.join(@output_path, "index.html"), "w") { |f| f.write(index_template.result(binding)) }
