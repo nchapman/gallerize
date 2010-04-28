@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors = ["Nick Chapman"]
   s.date = %q{2010-04-28}
   s.email = %q{nchapman@gmail.com}
-  s.files = ["bin/gallerize", "themes/default/index.html.erb", "themes/default/resources/screen.css", "themes/default/show.html.erb"]
-  s.require_paths = ["lib"]
+  s.files = ["lib/gallerizer.rb", "bin/gallerize", "themes/default/index.html.erb", "themes/default/resources/screen.css", "themes/default/show.html.erb"]
+  #s.require_paths = ["lib"]
   s.executables = ["gallerize"]
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Create an HTML photo gallery from a directory of images}
