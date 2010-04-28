@@ -1,29 +1,46 @@
 require 'erb'
 require 'rubygems'
 require 'rmagick'
+require 'natural_sort_kernel'
 
-def read(path, file)
-  File.open(File.join(path, file)) { |f| f.read }
+def read(path_parts)
+  File.open(File.join(path_parts)) { |f| f.read }
 end
 
-def write(path, file, text)
-  File.open(File.join(path, file), "w") { |f| f.write(text) }
+def write(path_parts, text)
+  File.open(File.join(path_parts), "w") { |f| f.write(text) }
 end
 
-def thumb(image, size)
+def render(input_path_parts, output_path_parts, binding)
+  write(output_path_parts, ERB.new(read(input_path_parts)).result(binding))
+end
+
+def resize(image, size, square = false)
   thumb_file_path = File.join(@output_path, "thumbs", File.basename(image, ".jpg") << "_#{size}.jpg")
   
   unless File.exists?(thumb_file_path)
     file = Magick::Image::read(image).first
-    file.resize_to_fit!(size, size)
+    
+    puts "Generating #{File.basename(thumb_file_path)}..."
+    
+    if square
+      file.resize_to_fill!(size, size)
+    else
+      file.resize_to_fit!(size, size)
+    end
+
     file.write(thumb_file_path){ self.quality = size <= 250 ? 80 : 95 }
   end
   
   return File.basename(thumb_file_path)
 end
 
-def render(input_path, input_file, output_path, output_file, binding)
-  write(output_path, output_file, ERB.new(read(input_path, input_file)).result(binding))
+def next?(index)
+  @images.size - 1 != index
+end
+
+def previous?(index)
+  index != 0
 end
 
 # Setup variables
@@ -34,10 +51,19 @@ end
 # Create output paths
 `mkdir -p "#{@output_path}"`
 `mkdir -p "#{File.join(@output_path, "thumbs")}"`
+`mkdir -p "#{File.join(@output_path, "show")}"`
+
+# Copy support files
+`cp #{File.join(@template_path, "screen.css")} #{File.join(@output_path, "screen.css")}`
 
 # Gather images
-@images = Dir["*.jpg"]
+@images = Dir["*.jpg"].natural_sort
 
-# Create Index file
-render(@template_path, "index.html.erb", @output_path, "index.html", binding)
+# Create Index page
+render([@template_path, "index.html.erb"], [@output_path, "index.html"], binding)
 
+# Create Image pages
+
+@images.each_with_index do |image, i|
+  render([@template_path, "show.html.erb"], [@output_path, "show", "#{i}.html"], binding)
+end

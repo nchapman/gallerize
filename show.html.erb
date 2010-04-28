@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gallerize</title>
+    <meta charset="utf-8" />
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="http://yui.yahooapis.com/combo?3.0.0/build/cssreset/reset-min.css&3.0.0/build/cssfonts/fonts-min.css&3.0.0/build/cssbase/base-context-min.css" />
+    <link rel="stylesheet" href="../screen.css" />
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        <h1><%= @title %></h1>
+      </header>
+      <section class="yui-cssbase">
+        <% if previous?(i) %><a href="<%= i - 1 %>.html"><img src="../thumbs/<%= resize(@images[i - 1], 75, true)%>" /></a><% end %>
+        <img src="../thumbs/<%= resize(image, 800) %>" />
+        <% if next?(i) %><a href="<%= i + 1 %>.html"><img src="../thumbs/<%= resize(@images[i + 1], 75, true)%>" /></a><% end %>
+      </section>
+    </div>
+  </body>
+</html>
