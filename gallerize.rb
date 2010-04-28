@@ -33,6 +33,7 @@ def previous_image(i)
   i != 0 ? @images[i - 1] : nil
 end
 
+# Parse options
 options = Trollop::options do
   opt :name, "Name", :default => "gallerize"
   opt :theme, "Theme", :default => "default"
@@ -59,10 +60,10 @@ cp_r(File.join(@theme_path, "resources/."), File.join(@output_path, "resources")
 index_template = ERB.new(File.open(File.join(@theme_path, "index.html.erb")) { |f| f.read })
 show_template = ERB.new(File.open(File.join(@theme_path, "show.html.erb")) { |f| f.read })
 
-# Create Index page
+# Create index page
 File.open(File.join(@output_path, "index.html"), "w") { |f| f.write(index_template.result(binding)) }
 
-# Create Show pages
+# Create show pages
 @images.each_with_index do |image, i|
   File.open(File.join(@output_path, "show", "#{i}.html"), "w") { |f| f.write(show_template.result(binding)) }
 end
