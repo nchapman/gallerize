@@ -15,9 +15,9 @@
         <h1><%= @name %></h1>
       </header>
       <section class="yui-cssbase">
-        <img src="../thumbs/<%= resize(image, 800) %>" />
-        <% if previous_image(i) %><a href="<%= i - 1 %>.html"><img src="../thumbs/<%= resize(previous_image(i), 75, true)%>" /></a><% end %>
-        <% if next_image(i) %><a href="<%= i + 1 %>.html"><img src="../thumbs/<%= resize(next_image(i), 75, true)%>" /></a><% end %>
+        <img src="../<%= image.resize(675) %>" />
+        <% if previous_image %><a href="<%= previous_image.id %>.html"><img src="../<%= previous_image.resize(75, true)%>" /></a><% end %>
+        <% if next_image %><a href="<%= next_image.id %>.html"><img src="../<%= next_image.resize(75, true)%>" /></a><% end %>
       </section>
     </div>
   </body>

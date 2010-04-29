@@ -13,6 +13,11 @@ body {
   padding: 2em;
 }
 
+#container {
+  margin: 0 auto;
+  width: 675px;
+}
+
 h1 {
   color: #777;
   font-size: 400%;
@@ -22,7 +27,7 @@ h1 {
 
 .item {
   float: left;
-  margin: 0 1.5em 1.5em 0;
+  margin: 0 15px 15px 0;
 }
 
 .item img {

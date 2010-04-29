@@ -12,4 +12,4 @@ end
 
 Trollop::die :output, "is required" if options[:output].nil?
 
-Gallerizer.new(options[:name], options[:output], options[:theme]).generate
+Gallerizer.new(options[:name], options[:output], options[:theme]).gallerize

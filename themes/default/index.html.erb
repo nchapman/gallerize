@@ -15,8 +15,8 @@
         <h1><%= @name %></h1>
       </header>
       <section class="yui-cssbase">
-        <% @images.each_with_index do |image, i| %>
-          <div class="item"><a href="show/<%= i %>.html"><img src="thumbs/<%= resize(image, 150, true) %>" height="150" width="150" /></a></div>
+        <% @images.each do |image| %>
+          <div class="item"><a href="show/<%= image.id %>.html"><img src="<%= image.resize(150, true) %>" height="150" width="150" /></a></div>
         <% end %>
       </section>
     </div>
