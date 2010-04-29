@@ -23,7 +23,7 @@ class Image
         file.resize_to_fit!(size, size)
       end
 
-      file.write(thumb_file_path){ self.quality = (size <= 200 ? 85 : 95) }
+      file.write(thumb_file_path)
       
       # Free memory
       file.destroy!
